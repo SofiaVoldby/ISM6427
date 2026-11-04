@@ -7,6 +7,19 @@
   <meta name="theme-color" content="#1b2a4a" />
   <title>Weather — Boca Raton</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      try {
+        var pref = localStorage.getItem("weather-theme-pref") || "system";
+        var resolved = pref === "system"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : pref;
+        document.documentElement.setAttribute("data-theme", resolved);
+      } catch (err) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="bg" id="bg">
@@ -16,6 +29,38 @@
   </div>
 
   <div class="app">
+    <div class="topbar">
+      <span class="greeting" id="greeting">Hello, Sofia</span>
+      <div class="theme-switch glass" id="themeSwitch">
+        <button class="theme-btn" data-theme-choice="light" title="Light" aria-label="Light theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.5"></circle>
+            <g>
+              <line x1="12" y1="2" x2="12" y2="4.3"></line>
+              <line x1="12" y1="19.7" x2="12" y2="22"></line>
+              <line x1="2" y1="12" x2="4.3" y2="12"></line>
+              <line x1="19.7" y1="12" x2="22" y2="12"></line>
+              <line x1="4.9" y1="4.9" x2="6.5" y2="6.5"></line>
+              <line x1="17.5" y1="17.5" x2="19.1" y2="19.1"></line>
+              <line x1="4.9" y1="19.1" x2="6.5" y2="17.5"></line>
+              <line x1="17.5" y1="6.5" x2="19.1" y2="4.9"></line>
+            </g>
+          </svg>
+        </button>
+        <button class="theme-btn" data-theme-choice="dark" title="Dark" aria-label="Dark theme">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a9 9 0 1 0 10.8 10.8z"></path>
+          </svg>
+        </button>
+        <button class="theme-btn" data-theme-choice="system" title="System" aria-label="Match system theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
     <header class="search-wrap">
       <div class="search-bar glass">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">

@@ -1,6 +1,10 @@
 (() => {
   "use strict";
 
+  const USER_NAME = "Sofia";
+  const THEME_KEY = "weather-theme-pref";
+  const darkSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
   const DEFAULT_LOCATION = {
     name: "Boca Raton",
     admin1: "Florida",
@@ -50,17 +54,17 @@
       <line x1="4.4" y1="4.4" x2="6.3" y2="6.3"></line><line x1="17.7" y1="17.7" x2="19.6" y2="19.6"></line>
       <line x1="4.4" y1="19.6" x2="6.3" y2="17.7"></line><line x1="17.7" y1="6.3" x2="19.6" y2="4.4"></line>
     </g></svg>`,
-    moon: `<svg viewBox="0 0 24 24" fill="#dfe6f5" stroke="none"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a9 9 0 1 0 10.8 10.8z"></path></svg>`,
-    cloud: `<svg viewBox="0 0 24 24" fill="#e7ecf5" stroke="none"><path d="M7.5 18.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 18.5z"></path></svg>`,
+    moon: `<svg viewBox="0 0 24 24" fill="var(--icon-moon)" stroke="none"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a9 9 0 1 0 10.8 10.8z"></path></svg>`,
+    cloud: `<svg viewBox="0 0 24 24" fill="var(--icon-cloud)" stroke="none"><path d="M7.5 18.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 18.5z"></path></svg>`,
     "cloud-sun": `<svg viewBox="0 0 24 24"><g fill="#ffd166" stroke="#ffd166" stroke-width="1.3" stroke-linecap="round">
       <circle cx="8.3" cy="8.3" r="3.6"></circle>
       <line x1="8.3" y1="1.8" x2="8.3" y2="3.4"></line><line x1="2.9" y1="4" x2="4.1" y2="5.2"></line><line x1="1.5" y1="8.3" x2="3.1" y2="8.3"></line>
-    </g><path fill="#e7ecf5" stroke="none" d="M9 20.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 19.5 20.5z"></path></svg>`,
-    "cloud-moon": `<svg viewBox="0 0 24 24"><path fill="#dfe6f5" stroke="none" d="M16.5 8.8a5.3 5.3 0 1 1-6-5.1 5.6 5.6 0 0 0 6 5.1z"></path><path fill="#e7ecf5" stroke="none" d="M9 20.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 19.5 20.5z"></path></svg>`,
-    "cloud-rain": `<svg viewBox="0 0 24 24"><path fill="#cdd6e6" stroke="none" d="M7.5 16a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 16z"></path><g stroke="#8fb4e3" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="18.5" x2="7" y2="21.5"></line><line x1="12" y1="18.5" x2="11" y2="21.5"></line><line x1="16" y1="18.5" x2="15" y2="21.5"></line></g></svg>`,
-    "cloud-snow": `<svg viewBox="0 0 24 24"><path fill="#d7dde8" stroke="none" d="M7.5 16a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 16z"></path><g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="18" x2="8" y2="22"></line><line x1="6.3" y1="19" x2="9.7" y2="21"></line><line x1="6.3" y1="21" x2="9.7" y2="19"></line><line x1="16" y1="18" x2="16" y2="22"></line><line x1="14.3" y1="19" x2="17.7" y2="21"></line><line x1="14.3" y1="21" x2="17.7" y2="19"></line></g></svg>`,
-    "cloud-lightning": `<svg viewBox="0 0 24 24"><path fill="#aab6c9" stroke="none" d="M7.5 15.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6 4.3 4.3 0 0 1-.6 8.4z"></path><path fill="#ffd166" stroke="none" d="M13 14.5l-3.4 4.6h2.4l-1.3 4.4 4.6-5.6h-2.3z"></path></svg>`,
-    fog: `<svg viewBox="0 0 24 24" fill="none" stroke="#dbe2ee" stroke-width="1.8" stroke-linecap="round"><path d="M5 9.5a5 5 0 0 1 9.6-1.9" fill="none"></path><line x1="3" y1="13.5" x2="21" y2="13.5"></line><line x1="5" y1="17" x2="19" y2="17"></line><line x1="7" y1="20.5" x2="17" y2="20.5"></line></svg>`,
+    </g><path fill="var(--icon-cloud)" stroke="none" d="M9 20.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 19.5 20.5z"></path></svg>`,
+    "cloud-moon": `<svg viewBox="0 0 24 24"><path fill="var(--icon-moon)" stroke="none" d="M16.5 8.8a5.3 5.3 0 1 1-6-5.1 5.6 5.6 0 0 0 6 5.1z"></path><path fill="var(--icon-cloud)" stroke="none" d="M9 20.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 19.5 20.5z"></path></svg>`,
+    "cloud-rain": `<svg viewBox="0 0 24 24"><path fill="var(--icon-cloud-rain)" stroke="none" d="M7.5 16a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 16z"></path><g stroke="var(--icon-raindrop)" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="18.5" x2="7" y2="21.5"></line><line x1="12" y1="18.5" x2="11" y2="21.5"></line><line x1="16" y1="18.5" x2="15" y2="21.5"></line></g></svg>`,
+    "cloud-snow": `<svg viewBox="0 0 24 24"><path fill="var(--icon-cloud-snow)" stroke="none" d="M7.5 16a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6A4.3 4.3 0 0 1 18 16z"></path><g stroke="var(--icon-snowflake)" stroke-width="1.6" stroke-linecap="round"><line x1="8" y1="18" x2="8" y2="22"></line><line x1="6.3" y1="19" x2="9.7" y2="21"></line><line x1="6.3" y1="21" x2="9.7" y2="19"></line><line x1="16" y1="18" x2="16" y2="22"></line><line x1="14.3" y1="19" x2="17.7" y2="21"></line><line x1="14.3" y1="21" x2="17.7" y2="19"></line></g></svg>`,
+    "cloud-lightning": `<svg viewBox="0 0 24 24"><path fill="var(--icon-cloud-storm)" stroke="none" d="M7.5 15.5a5 5 0 0 1-.4-10 6 6 0 0 1 11.5 1.6 4.3 4.3 0 0 1-.6 8.4z"></path><path fill="#ffd166" stroke="none" d="M13 14.5l-3.4 4.6h2.4l-1.3 4.4 4.6-5.6h-2.3z"></path></svg>`,
+    fog: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--icon-fog)" stroke-width="1.8" stroke-linecap="round"><path d="M5 9.5a5 5 0 0 1 9.6-1.9" fill="none"></path><line x1="3" y1="13.5" x2="21" y2="13.5"></line><line x1="5" y1="17" x2="19" y2="17"></line><line x1="7" y1="20.5" x2="17" y2="20.5"></line></svg>`,
   };
 
   const state = {
@@ -74,6 +78,8 @@
 
   const els = {
     bg: el("bg"),
+    greeting: el("greeting"),
+    themeSwitch: el("themeSwitch"),
     searchInput: el("searchInput"),
     searchResults: el("searchResults"),
     locateBtn: el("locateBtn"),
@@ -104,6 +110,46 @@
 
   function getWeatherText(code) {
     return (WEATHER_CODES[code] || { text: "Unknown" }).text;
+  }
+
+  function renderGreeting() {
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+    els.greeting.textContent = `${greeting}, ${USER_NAME}`;
+  }
+
+  function getStoredThemePref() {
+    try {
+      return localStorage.getItem(THEME_KEY) || "system";
+    } catch (err) {
+      return "system";
+    }
+  }
+
+  function resolveTheme(pref) {
+    return pref === "system" ? (darkSchemeQuery.matches ? "dark" : "light") : pref;
+  }
+
+  function applyTheme(pref) {
+    const resolved = resolveTheme(pref);
+    document.documentElement.setAttribute("data-theme", resolved);
+
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute("content", resolved === "light" ? "#dce8f7" : "#1b2a4a");
+
+    Array.from(els.themeSwitch.querySelectorAll(".theme-btn")).forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.themeChoice === pref);
+    });
+
+    try {
+      localStorage.setItem(THEME_KEY, pref);
+    } catch (err) {}
+  }
+
+  function handleThemeSwitch(event) {
+    const btn = event.target.closest(".theme-btn");
+    if (!btn) return;
+    applyTheme(btn.dataset.themeChoice);
   }
 
   function setLoading(isLoading) {
@@ -344,7 +390,13 @@
     });
     els.unitToggle.addEventListener("click", handleUnitToggle);
     els.locateBtn.addEventListener("click", handleLocate);
+    els.themeSwitch.addEventListener("click", handleThemeSwitch);
+    darkSchemeQuery.addEventListener("change", () => {
+      if (getStoredThemePref() === "system") applyTheme("system");
+    });
 
+    renderGreeting();
+    applyTheme(getStoredThemePref());
     fetchWeather(state.location, state.unit);
   }
 
